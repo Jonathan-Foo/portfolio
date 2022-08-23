@@ -1,5 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled, {css} from "styled-components";
+import pingSound from "../assets/POP.mp3"
+
+const ping = new Audio(pingSound);
+const collisionSound= () => {
+    ping.currentTime = 0
+    ping.volume = 0.1
+    ping.play(); 
+}
 
 function Cursor() {
   const cursorDotOutline = useRef();
@@ -30,6 +38,7 @@ function Cursor() {
   };
   const onMouseDown = () => {
     cursorEnlarged.current = true;
+    collisionSound();
     toggleCursorSize();
   };
   const onMouseUp = () => {

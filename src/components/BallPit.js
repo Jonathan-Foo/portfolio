@@ -16,45 +16,43 @@ const sphere = {
   radius: 1.5
 }
 
-function throttle(cb, delay = 200) {
-  let shouldWait = false
-  let waitingArgs
-  const timeoutFunc = () => {
-    if (waitingArgs == null) {
-      shouldWait = false
-    } else {
-      cb(...waitingArgs)
-      waitingArgs = null
+export default function BallPit({  }) {
+  const ping = new Audio(pingSound);
+
+  function throttle(cb, delay = 200) {
+    let shouldWait = false
+    let waitingArgs
+    const timeoutFunc = () => {
+      if (waitingArgs == null) {
+        shouldWait = false
+      } else {
+        cb(...waitingArgs)
+        waitingArgs = null
+        setTimeout(timeoutFunc, delay)
+      }
+    }
+  
+    return (...args) => {
+      if (shouldWait) {
+        waitingArgs = args
+        return
+      }
+  
+      cb(...args)
+      shouldWait = true
+  
       setTimeout(timeoutFunc, delay)
     }
-  }
+  }  
 
-  return (...args) => {
-    if (shouldWait) {
-      waitingArgs = args
-      return
-    }
-
-    cb(...args)
-    shouldWait = true
-
-    setTimeout(timeoutFunc, delay)
-  }
-}
-
-
-
-export default function BallPit({ audio }) {
-  
-  const ping = new Audio(pingSound);
   const collisionSound= throttle((e) => {
     // console.log(e.contact.impactVelocity);
-    if(!audio) return;
-    if(e.contact.impactVelocity > 5) {
-      ping.currentTime = 0
-      ping.volume = clamp(e.contact.impactVelocity/ 20, 0, 1)
-      ping.play();
-    }
+    // if(!audio) return;
+    // if(e.contact.impactVelocity > 5) {
+    //   ping.currentTime = 0
+    //   ping.volume = clamp(e.contact.impactVelocity/ 20, 0, 1)
+    //   ping.play();
+    // }
   })
 
   
@@ -79,7 +77,7 @@ export default function BallPit({ audio }) {
           <group position={[0, 0, -10]}>
             <Mouse />
             <Borders />
-            <InstancedSpheres collisionSound={collisionSound} />
+            <InstancedSpheres count={200} collisionSound={collisionSound} />
           </group>
         </Physics>
         <EffectComposer>
@@ -92,7 +90,7 @@ export default function BallPit({ audio }) {
   )
 }
 
-function InstancedSpheres({ count = 200, collisionSound }) {
+function InstancedSpheres({ count , collisionSound }) {
   const { viewport } = useThree()
   const [ref] = useSphere((index) => ({ mass: 100, position: [4 - Math.random() * 8, viewport.height, 0, 0], args: [sphere.radius], onCollide: (e) => collisionSound(e)}))
   return (
@@ -131,7 +129,9 @@ function Mouse() {
 
 
 const BallPitWrapper = styled.div`
-  position: absolute;
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   margin: 0;

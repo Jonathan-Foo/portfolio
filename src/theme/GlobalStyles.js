@@ -13,7 +13,7 @@ const GlobalStyles = createGlobalStyle`
 
     body {
         // cursor: none;
-        background: ${({theme}) => theme.color.bgColor};
+        background: ${({ theme }) => theme.color.bgColor};
         font-family: 'Satoshi-Variable', Helvetica, 'Arial Narrow Bold', sans-serif;
         overflow: hidden;
         border-inline: 4px solid hsl(0, 0%, 15%);
@@ -27,6 +27,6 @@ const GlobalStyles = createGlobalStyle`
         color: inherit;
         text-decoration: none;
     }
-`
+`;
 
 export default GlobalStyles;

@@ -29,7 +29,7 @@ const letterAni ={
 
 function Navbar() {
   const hoverAnim = {
-    scale: 1.1
+    // scale: 1.1
   }
   const [introComplete, setIntroComplete] = useState(false);
 
@@ -49,6 +49,7 @@ function Navbar() {
         <motion.li whileHover={hoverAnim} variants={letterAni}>ABOUT ME</motion.li>
         <motion.li whileHover={hoverAnim} variants={letterAni}>PROJECTS</motion.li>
         <motion.li whileHover={hoverAnim} variants={letterAni}>CONTACTS</motion.li>
+        {/* <motion.li >audio</motion.li> */}
       </motion.ul>
       
     </NavWrapper>
