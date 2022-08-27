@@ -3,10 +3,10 @@ import styled from "styled-components";
 import Navbar from "./Navbar";
 import Content from "./Content";
 
-export default function Main({ pageNumber }) {
+export default function Main({ pageNumber, setPageNumber }) {
 	return (
 		<MainWrapper>
-			<Navbar />
+			<Navbar pageNumber={pageNumber} setPageNumber={setPageNumber}/>
 			<Content pageNumber={pageNumber} />
 		</MainWrapper>
 	);
@@ -15,5 +15,4 @@ export default function Main({ pageNumber }) {
 const MainWrapper = styled.main`
 	position: absolute;
 	width: 100%;
-	height: 100%;
 `;

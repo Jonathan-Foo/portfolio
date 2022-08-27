@@ -1,6 +1,6 @@
 import React from 'react'
-import styled, {css} from 'styled-components'
-import {animate, motion} from 'framer-motion';
+import styled, { css } from 'styled-components'
+import {motion} from 'framer-motion';
 import { useEffect } from 'react';
 import { useState } from 'react';
 
@@ -14,11 +14,9 @@ const containerAnim = {
 
 const letterAni ={
   initial: { 
-    // y: 200,
     opacity: 0,
   },
   animate: {
-    // y: 0,
     opacity: 1,
     transition: {
       ease: [0.6, 0.01, -0.05, 0.95],
@@ -27,29 +25,17 @@ const letterAni ={
   },
 };
 
-function Navbar() {
-  const hoverAnim = {
-    // scale: 1.1
-  }
-  const [introComplete, setIntroComplete] = useState(false);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setIntroComplete(true);
-    }, 2000);
-  }, []);
-
+function Navbar({ pageNumber, setPageNumber }) {
   return (
-    <NavWrapper intro={introComplete}>
+    <NavWrapper >
       <motion.ul 
         variants={containerAnim}
         initial='initial'
         animate='animate'
         >
-        <motion.li whileHover={hoverAnim} variants={letterAni}>ABOUT ME</motion.li>
-        <motion.li whileHover={hoverAnim} variants={letterAni}>PROJECTS</motion.li>
-        <motion.li whileHover={hoverAnim} variants={letterAni}>CONTACTS</motion.li>
-        {/* <motion.li >audio</motion.li> */}
+        <Links variants={letterAni} active={pageNumber === 1} onClick={() => setPageNumber(1)}>ABOUT ME</Links>
+        <Links variants={letterAni} active={pageNumber === 2} onClick={() => setPageNumber(2)}>PROJECTS</Links>
+        <Links variants={letterAni} active={pageNumber === 3} onClick={() => setPageNumber(3)}>CONTACTS</Links>
       </motion.ul>
       
     </NavWrapper>
@@ -64,44 +50,45 @@ const NavWrapper = styled.nav`
     align-items: center;
     padding-inline: 6%;
     padding-top: 1.5%;
-    // border: 1px solid red;
-
+    
     ul {
       display: flex;
       gap: 2rem;
       font-size: 2rem;
       font-weight: 400;
-      
-      
-      
-      li {
-        position: relative;
-        &:after {
-          content: "";
-          position: absolute;
-          width: 0;
-          height: 2px;
-          display: block;
-          margin-top: 5px;
-          right: 0;
-          background: ${({theme}) => theme.color.text};
-          transition: 400ms ease;
-        }
-  
-        &:hover {
-          color: ${({theme}) => theme.color.text};
-          &:after {
-            width: 100%;
-            left: 0;
-            background: ${({theme}) => theme.color.text};
-          }
-        }
-
-      }
     }
 `
 
+const Links = styled(motion.li)`
+  position: relative;
+  color: ${(props) => props.active && "#00bd35"}; 
+  &:after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 2px;
+    display: block;
+    margin-top: 5px;
+    right: 0;
+    background: ${({theme}) => theme.color.text};
+    transition: 400ms ease;
+     ${(props) => props.active && css`
+      width: 100%;
+      left: 0;
+     `}; 
+  }
 
+  &:hover {
+    color: ${({theme}) => theme.color.text};
+    &:after {
+      width: 100%;
+      left: 0;
+      background: ${({theme}) => theme.color.text};
+    }
+  }
+
+  
+`
 
 export default Navbar
 

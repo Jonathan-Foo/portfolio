@@ -17,6 +17,7 @@ const GlobalStyles = createGlobalStyle`
         font-family: 'Satoshi-Variable', Helvetica, 'Arial Narrow Bold', sans-serif;
         overflow: hidden;
         border-inline: 4px solid hsl(0, 0%, 15%);
+        color: ${({ theme }) => theme.color.grey};
     }
     
     ul {

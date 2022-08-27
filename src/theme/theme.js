@@ -13,6 +13,10 @@ const theme = {
 		size: "12px",
 		outlineSize: "12px",
 	},
+	card: {
+		height: "70vh",
+		width: "60vw",
+	}
 };
 
 export default theme;

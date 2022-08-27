@@ -35,7 +35,7 @@ export default function App() {
       <Cursor />
       <Title />
       <BallPit/>
-      <Main pageNumber={pageNumber}/>
+      <Main pageNumber={pageNumber} setPageNumber={setPageNumber}/>
     </>
   )
 }

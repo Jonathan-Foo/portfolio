@@ -5,7 +5,6 @@ import { useAnimation, motion } from "framer-motion";
 const containerAnim = {
 	animate: {
 		transition: {
-			// delayChildren: 1,
 			staggerChildren: 0.4,
 		},
 	},
