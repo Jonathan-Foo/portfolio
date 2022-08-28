@@ -27,7 +27,7 @@ const GridContainer = styled.div`
   
 `
 
-const Cell = styled .div`
+const Cell = styled.div`
   display: flex;
   width: 11.1%;
   height: 100%;
@@ -35,16 +35,22 @@ const Cell = styled .div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  
   gap: .5rem;
   outline: 1px dashed white;
   background-color: rgba(255, 255, 255, 0.2);
   img{
     width: 50%;
   }
-  p{
+  
+  p {
     font-weight: 800;
     font-size: .9rem;
+  }
+
+  @media(max-width: 1280px){
+    p{
+      display: none;
+    }
   }
 
   @media(max-width: 600px){
@@ -54,4 +60,6 @@ const Cell = styled .div`
     }
   }
 `
+
+
 export default SkillsTable;

@@ -1,8 +1,6 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
 import {motion} from 'framer-motion';
-import { useEffect } from 'react';
-import { useState } from 'react';
 
 const containerAnim = {
   animate: {

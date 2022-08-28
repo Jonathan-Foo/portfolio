@@ -32,9 +32,9 @@ function Cards({ activeImageIndex }) {
 						{
 							projectInfo[activeImageIndex].contributions.map((info, index) => (
 								<div key={index}>
-									<a  href={info.repoSrc} target="_blank" >{info.repoName}</a>
+									<a rel="noreferrer" href={info.repoSrc} target="_blank" >{info.repoName}</a>
 									<span> | </span>
-									<a  href={info.prSrc} target="_blank">PR example</a>
+									<a rel="noreferrer" href={info.prSrc} target="_blank">PR example</a>
 								</div>
 							))
 						}

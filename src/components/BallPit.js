@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState} from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber"
 import { Physics, usePlane, useSphere } from "@react-three/cannon"
 import { EffectComposer, SSAO, Bloom } from "@react-three/postprocessing"
@@ -14,12 +14,11 @@ const sphere = {
   radius: 1.5
 }
 
-export default function BallPit({  }) {
+export default function BallPit() {
   return (
     <BallPitWrapper >
       <Canvas shadows gl={{ stencil: false, antialias: false }} camera={{ position: [0, 0, 20], fov: 50, near: 17, far: 40 }}>     
         <fog attach="fog" args={[color.fog, 25, 35]} />
-        {/* <color attach="background" args={[color.bg]} /> */}
         <ambientLight intensity={1.5} />
         <directionalLight position={[-10, -10, -5]} intensity={0.5} />
         <directionalLight
@@ -49,7 +48,7 @@ export default function BallPit({  }) {
   )
 }
 
-function InstancedSpheres({}) {
+function InstancedSpheres() {
   const { viewport } = useThree()
   const count = viewport.width < 15 ? 70 : 200; 
   const [ref] = useSphere((index) => ({ mass: 100, position: [4 - Math.random() * 8, viewport.height, 0, 0], args: [sphere.radius]}))
@@ -81,7 +80,7 @@ function Plane({ color, ...props }) {
 
 function Mouse() {
   const { viewport } = useThree()
-  const [mouseSize, setMouseSize] = useState(viewport.width < 15 ? 3 : 4);
+  const [mouseSize, setMouseSize] = useState(viewport.width < 15 ? 2 : 4);
   const [, api] = useSphere(() => ({ type: "Kinematic", args: [mouseSize] }))
   return useFrame((state) => api.position.set((state.mouse.x * viewport.width) / 2, (state.mouse.y * viewport.height) / 2, 7))
 }

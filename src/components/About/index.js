@@ -169,13 +169,23 @@ const ParallaxContainer = styled(Tilt)`
 		font-weight: 700;
 	}
 
-	p {
-		font-size: 1.2rem;
+	article {
+		& > p {
+			font-size: 1.2rem;
+		}
 	}
 
 	@media(max-width: 600px) {
 		margin-top: 5rem;
 		width: 85%;
+	}
+
+	@media(max-width: 420px) {
+		article {
+			& > p {
+				font-size: 0.9rem;
+			}
+		}
 	}
 `;
 

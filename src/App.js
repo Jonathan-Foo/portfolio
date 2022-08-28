@@ -3,7 +3,6 @@ import BallPit from './components/BallPit';
 import Main from './components/Main';
 import Title from './components/Title';
 import Cursor from './components/Cursor';
-import { useScroll } from 'framer-motion';
 
 export default function App() {
   const [pageNumber, setPageNumber] = useState(0);
