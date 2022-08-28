@@ -84,7 +84,7 @@ const Container = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	padding-block: 5.5%; 
+	padding-block: 5.5%;
 `;
 
 const SliderContainer = styled.div`
@@ -93,6 +93,10 @@ const SliderContainer = styled.div`
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+
+	@media (max-width: 600px) {
+		margin-top: 7rem;
+	}
 	
 `;
 
@@ -103,6 +107,11 @@ const SlideWrapper = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
+
+	@media (max-width: 600px) {
+		width: ${({theme}) => theme.card.mobileWidth};
+		height: ${({theme}) => theme.card.mobileHeight};
+	}
 `;
 
 const MotionDiv = styled(motion.div)`
@@ -149,6 +158,10 @@ const Options = styled.div`
 			height: 30%;
 			width: 30%;
 		}
+	}
+
+	@media (max-width: 600px){
+		display: none;
 	}
 `;
 

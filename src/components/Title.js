@@ -39,10 +39,36 @@ const Container = styled(motion.div)`
 	justify-content: flex-start;
 	align-items: flex-start;
 	width: 100%;
-	// border: 1px solid red;
+	// outline: 1px solid red;
 	padding-inline: 4%;
 	padding-top: 2%;
 	overflow: hidden;
+
+	@media(max-width: 1300px) {
+		padding-top: 10%;
+	}
+
+	@media(max-width: 850px) {
+		padding-top: 15%;
+		h1:first-child{
+			font-size: 3.5rem;
+			margin-bottom: -1rem;
+		}
+		h1:last-child{
+			font-size: 3rem;
+		}
+	}
+
+	@media(max-width: 600px) {
+		padding-top: 20%;
+		h1:first-child{
+			font-size: 2.5rem;
+			margin-bottom: -1rem;
+		}
+		h1:last-child{
+			font-size: 2rem;
+		}
+	}
 `;
 const Name = styled(motion.h1)`
 	font-size: 6rem;

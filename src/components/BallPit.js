@@ -3,8 +3,6 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber"
 import { Physics, usePlane, useSphere } from "@react-three/cannon"
 import { EffectComposer, SSAO, Bloom } from "@react-three/postprocessing"
 import styled from 'styled-components';
-import { clamp } from "lodash-es"; 
-import pingSound from "../assets/POP.mp3"
 
 const color = {
   ball: "#007326",
@@ -17,45 +15,6 @@ const sphere = {
 }
 
 export default function BallPit({  }) {
-  const ping = new Audio(pingSound);
-
-  function throttle(cb, delay = 200) {
-    let shouldWait = false
-    let waitingArgs
-    const timeoutFunc = () => {
-      if (waitingArgs == null) {
-        shouldWait = false
-      } else {
-        cb(...waitingArgs)
-        waitingArgs = null
-        setTimeout(timeoutFunc, delay)
-      }
-    }
-  
-    return (...args) => {
-      if (shouldWait) {
-        waitingArgs = args
-        return
-      }
-  
-      cb(...args)
-      shouldWait = true
-  
-      setTimeout(timeoutFunc, delay)
-    }
-  }  
-
-  const collisionSound= throttle((e) => {
-    // console.log(e.contact.impactVelocity);
-    // if(!audio) return;
-    // if(e.contact.impactVelocity > 5) {
-    //   ping.currentTime = 0
-    //   ping.volume = clamp(e.contact.impactVelocity/ 20, 0, 1)
-    //   ping.play();
-    // }
-  })
-
-  
   return (
     <BallPitWrapper >
       <Canvas shadows gl={{ stencil: false, antialias: false }} camera={{ position: [0, 0, 20], fov: 50, near: 17, far: 40 }}>     
@@ -77,7 +36,7 @@ export default function BallPit({  }) {
           <group position={[0, 0, -10]}>
             <Mouse />
             <Borders />
-            <InstancedSpheres count={200} collisionSound={collisionSound} />
+            <InstancedSpheres/>
           </group>
         </Physics>
         <EffectComposer>
@@ -90,9 +49,10 @@ export default function BallPit({  }) {
   )
 }
 
-function InstancedSpheres({ count , collisionSound }) {
+function InstancedSpheres({}) {
   const { viewport } = useThree()
-  const [ref] = useSphere((index) => ({ mass: 100, position: [4 - Math.random() * 8, viewport.height, 0, 0], args: [sphere.radius], onCollide: (e) => collisionSound(e)}))
+  const count = viewport.width < 15 ? 70 : 200; 
+  const [ref] = useSphere((index) => ({ mass: 100, position: [4 - Math.random() * 8, viewport.height, 0, 0], args: [sphere.radius]}))
   return (
     <instancedMesh ref={ref} castShadow receiveShadow args={[null, null, count]}>
       <sphereBufferGeometry args={[sphere.radius, 32, 32]} />
@@ -120,9 +80,8 @@ function Plane({ color, ...props }) {
 }
 
 function Mouse() {
-  const [mouseSize, setMouseSize] = useState(4)
-
   const { viewport } = useThree()
+  const [mouseSize, setMouseSize] = useState(viewport.width < 15 ? 3 : 4);
   const [, api] = useSphere(() => ({ type: "Kinematic", args: [mouseSize] }))
   return useFrame((state) => api.position.set((state.mouse.x * viewport.width) / 2, (state.mouse.y * viewport.height) / 2, 7))
 }

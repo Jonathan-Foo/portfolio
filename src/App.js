@@ -22,7 +22,6 @@ export default function App() {
     window.addEventListener("wheel", event => {
       const delta = Math.sign(event.deltaY);
       setPageNumber(prevInt => pageNumberFilter(prevInt, delta ));
-      console.info(delta);
     });
   }, [])
 

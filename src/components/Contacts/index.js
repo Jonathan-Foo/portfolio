@@ -55,14 +55,21 @@ const Contacts = () => {
 }
 
 const ContactsContainer = styled(motion.main)`
-  width: 100%;
-  display: flex; 
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  height: 75vh;
-  gap: 15%;
-  
+    width: 100%;
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    height: 75vh;
+    gap: 15%;
+    
+    @media(max-width: 600px) {
+      // background: red;
+      flex-direction: column;
+      margin-top: 5rem;
+      
+    }
+
 `
 
 const IconWrapper = styled(Tilt)`
@@ -102,6 +109,11 @@ const IconWrapper = styled(Tilt)`
       transition: 150ms ease-in-out;
       
     } 
+  }
+
+  @media(max-width: 600px) {
+    width: 20%;
+    
   }
 `
 

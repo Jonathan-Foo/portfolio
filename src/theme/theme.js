@@ -14,8 +14,10 @@ const theme = {
 		outlineSize: "12px",
 	},
 	card: {
-		height: "70vh",
-		width: "60vw",
+		height: '70vh',
+		width: '60vw',
+		mobileHeight: '60vh',
+		mobileWidth: '80vw',
 	}
 };
 

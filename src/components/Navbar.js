@@ -33,9 +33,9 @@ function Navbar({ pageNumber, setPageNumber }) {
         initial='initial'
         animate='animate'
         >
-        <Links variants={letterAni} active={pageNumber === 1} onClick={() => setPageNumber(1)}>ABOUT ME</Links>
-        <Links variants={letterAni} active={pageNumber === 2} onClick={() => setPageNumber(2)}>PROJECTS</Links>
-        <Links variants={letterAni} active={pageNumber === 3} onClick={() => setPageNumber(3)}>CONTACTS</Links>
+        <Links variants={letterAni} $active={pageNumber === 1} onClick={() => setPageNumber(1)}>ABOUT ME</Links>
+        <Links variants={letterAni} $active={pageNumber === 2} onClick={() => setPageNumber(2)}>PROJECTS</Links>
+        <Links variants={letterAni} $active={pageNumber === 3} onClick={() => setPageNumber(3)}>CONTACTS</Links>
       </motion.ul>
       
     </NavWrapper>
@@ -56,12 +56,26 @@ const NavWrapper = styled.nav`
       gap: 2rem;
       font-size: 2rem;
       font-weight: 400;
+
+      @media(max-width: 600px) {
+        font-size: 1.2rem;
+        gap: 1rem;
+        font-weight: 600;
+      }
+
+      @media(max-width: 400px) {
+        font-size: 1rem;
+        gap: 1rem;
+        font-weight: 600;
+      }
     }
+
+    
 `
 
 const Links = styled(motion.li)`
   position: relative;
-  color: ${(props) => props.active && "#00bd35"}; 
+  color: ${(props) => props.$active && "#00bd35"}; 
   &:after {
     content: "";
     position: absolute;
@@ -72,10 +86,10 @@ const Links = styled(motion.li)`
     right: 0;
     background: ${({theme}) => theme.color.text};
     transition: 400ms ease;
-     ${(props) => props.active && css`
-      width: 100%;
-      left: 0;
-     `}; 
+    ${(props) => props.$active && css`
+    width: 100%;
+    left: 0;
+    `}; 
   }
 
   &:hover {

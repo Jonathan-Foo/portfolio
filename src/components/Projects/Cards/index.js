@@ -56,7 +56,12 @@ const CardWrapper = styled.article`
 	border-radius: 15px;
 	overflow: hidden;
 	box-shadow: 0 0 50px 10px rgba(0,0,0,0.2);
+	
 
+	@media (max-width: 600px) {
+		width: ${({theme}) => theme.card.mobileWidth};
+		height: ${({theme}) => theme.card.mobileHeight};
+	}
 `;
 
 const Preview = styled.video`
@@ -107,12 +112,19 @@ const Overlay = styled.div`
 		}
 
 	}
+
+	@media (max-width: 600px) {
+		h2 {
+			font-size: 2.5rem;
+		}
+	}
 `
 
 const OpenSource = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-self: flex-start;
+	align-items: center;
 	justify-content: center;
 	padding-block: 1.5rem;
 	font-size: 1.3rem;
@@ -156,6 +168,18 @@ const OpenSource = styled.div`
 			&:hover {
 				color: ${({theme}) => theme.color.text};
 			}
+		}
+	}
+
+	@media (max-width: 600px) {
+		.title {
+			margin-bottom: 10%;
+			h2 {
+				font-size: 1.5rem;
+			}
+		}
+		.details{
+			font-size: 1.3rem;
 		}
 	}
 `

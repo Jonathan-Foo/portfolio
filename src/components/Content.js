@@ -9,7 +9,7 @@ const contentVariant = {
 	initial: {
 		opacity: 0,
 		
-		y: 1000,
+		y: 800,
 	},
 	animate: {
 		opacity: 1,
@@ -22,9 +22,8 @@ const contentVariant = {
 		},
 	},
 	exit: {
-		
 		opacity: 0,
-		y: 1000,
+		y: 800,
 	}
 }
 

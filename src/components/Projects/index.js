@@ -25,7 +25,6 @@ import {motion} from 'framer-motion';
 
 function Projects() {
 	return (
-		// <Container variants={projectVariant} initial="initial" animate="animate" exit="exit">
 		<Container>
 			<Slider />
 		</Container>
