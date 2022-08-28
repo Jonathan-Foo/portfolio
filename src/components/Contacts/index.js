@@ -14,7 +14,7 @@ const Icon = ({top, left, src, alt, link}) => {
         top={top}
         left={left}
       >  
-        <a href={link} target="_blank">
+        <a rel="noreferrer" href={link} target="_blank">
           <img src={src} alt={alt} />
         </a>  
     </IconWrapper>
