@@ -6,27 +6,6 @@ import linkedin from '../../assets/linkedin.svg';
 import Tilt from "react-parallax-tilt";
 import {motion} from 'framer-motion';
 
-// const contactVariant = {
-// 	initial: {
-// 		opacity: 0,
-// 		y: 500,
-// 	},
-// 	animate: {
-// 		opacity: 1,
-// 		y: 0,
-// 		transition: {
-// 			ease: [0.6, 0.01, -0.05, 0.95],
-// 			duration: 1,
-// 			// staggerChildren: 0.4,
-// 		},
-// 	},
-// 	exit: {
-// 		opacity: 0,
-// 		y: 500,
-// 	}
-// }
-
-
 const Icon = ({top, left, src, alt, link}) => {
   return (
     <IconWrapper 
@@ -45,7 +24,6 @@ const Icon = ({top, left, src, alt, link}) => {
 
 const Contacts = () => {
   return (
-    // <ContactsContainer variants={contactVariant} initial="initial" animate="animate" exit="exit">
     <ContactsContainer >
       <Icon src={github} alt="github" link="https://github.com/Jonathan-Foo"/>
       <Icon src={email} alt="email" link="mailto:jonathan.foozh@gmail.com"/>
@@ -64,7 +42,6 @@ const ContactsContainer = styled(motion.main)`
     gap: 15%;
     
     @media(max-width: 600px) {
-      // background: red;
       flex-direction: column;
       margin-top: 5rem;
       
@@ -73,7 +50,6 @@ const ContactsContainer = styled(motion.main)`
 `
 
 const IconWrapper = styled(Tilt)`
-  // position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;

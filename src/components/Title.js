@@ -48,7 +48,7 @@ const Container = styled(motion.div)`
 		padding-top: 10%;
 	}
 
-	@media(max-width: 850px) {
+	@media(max-width: 920px) {
 		padding-top: 15%;
 		h1:first-child{
 			font-size: 3.5rem;
@@ -67,6 +67,17 @@ const Container = styled(motion.div)`
 		}
 		h1:last-child{
 			font-size: 2rem;
+		}
+	}
+
+	@media(max-width: 400px) {
+		padding-top: 20%;
+		h1:first-child{
+			font-size: 2rem;
+			margin-bottom: -0.5rem;
+		}
+		h1:last-child{
+			font-size: 1.5rem;
 		}
 	}
 `;

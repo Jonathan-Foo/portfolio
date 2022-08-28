@@ -23,10 +23,6 @@ export default function App() {
       setPageNumber(prevInt => pageNumberFilter(prevInt, delta ));
     });
   }, [])
-
-  // useEffect(() => {
-  //   console.log(pageNumber);
-  // }, [pageNumber])
   
   return (
     <>

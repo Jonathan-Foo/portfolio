@@ -11,36 +11,6 @@ import {motion} from 'framer-motion';
 import { useState } from "react";
 import { useEffect } from "react";
 
-// const aboutVariant = {
-// 	initial: {
-// 		opacity: 0,
-// 		y: 500,
-// 	},
-// 	animate: {
-// 		opacity: 1,
-// 		y: 0,
-// 		transition: {
-// 			ease: [0.6, 0.01, -0.05, 0.95],
-// 			duration: 1,
-// 			// staggerChildren: 0.4,
-// 		},
-// 	},
-// 	exit: {
-// 		opacity: 0,
-// 		y: 500,
-// 	}
-// }
-
-// const aboutVariant = {
-// 	animate: {
-// 		transition: {
-// 			delayChildren: 0.4,
-// 			staggerChildren: 0.1,
-// 		},
-// 	}
-// }
-
-
 const Hobbies = ({ src, alt, top, left, width, padding, color, mTop, mLeft }) => {
 	return (
 		<HobbiesWrapper
@@ -70,7 +40,6 @@ function AboutMe() {
 	});
 	
 	return (
-		// <AboutContainer variants={aboutVariant} initial="initial" animate="animate" exit="exit">
 		<AboutContainer >
 			<ParallaxContainer blur={blur}>
 				<ProfileImage src={profileImage} alt="Profile Image" />
