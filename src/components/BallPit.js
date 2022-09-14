@@ -7,7 +7,7 @@ import {
   Physics,
   RigidBody,
 } from "@react-three/rapier";
-import { MeshNormalMaterial, Vector3 } from "three";
+import { Vector3 } from "three";
 import styled from "styled-components";
 
 const InstancedSpheres = ({ radius = 1, segments = 24 }) => {
