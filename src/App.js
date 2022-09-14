@@ -1,35 +1,35 @@
-import React, {useEffect, useState} from 'react';
-import BallPit from './components/BallPit';
-import Main from './components/Main';
-import Title from './components/Title';
-import Cursor from './components/Cursor';
+import React, { useEffect, useState } from "react";
+import BallPit from "./components/BallPit";
+import Main from "./components/Main";
+import Title from "./components/Title";
+import Cursor from "./components/Cursor";
 
 export default function App() {
   const [pageNumber, setPageNumber] = useState(0);
-  
+
   const pageNumberFilter = (prevInt, delta) => {
     if (prevInt === 0 && delta < 0) {
       return prevInt;
     } else if (prevInt === 3 && delta > 0) {
       return prevInt;
     } else {
-      return prevInt + delta / 2
+      return prevInt + delta / 2;
     }
-  }
+  };
 
   useEffect(() => {
-    window.addEventListener("wheel", event => {
+    window.addEventListener("wheel", (event) => {
       const delta = Math.sign(event.deltaY);
-      setPageNumber(prevInt => pageNumberFilter(prevInt, delta ));
+      setPageNumber((prevInt) => pageNumberFilter(prevInt, delta));
     });
-  }, [])
-  
+  }, []);
+
   return (
     <>
       <Cursor />
       <Title />
-      <BallPit/>
-      <Main pageNumber={pageNumber} setPageNumber={setPageNumber}/>
+      <BallPit />
+      <Main pageNumber={pageNumber} setPageNumber={setPageNumber} />
     </>
-  )
+  );
 }

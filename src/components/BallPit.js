@@ -1,90 +1,146 @@
-import React, {useState} from "react";
-import { Canvas, useFrame, useThree } from "@react-three/fiber"
-import { Physics, usePlane, useSphere } from "@react-three/cannon"
-import { EffectComposer, SSAO, Bloom } from "@react-three/postprocessing"
-import styled from 'styled-components';
+import { Suspense, useRef } from "react";
+import { Box } from "@react-three/drei";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import {
+  BallCollider,
+  InstancedRigidBodies,
+  Physics,
+  RigidBody,
+} from "@react-three/rapier";
+import { MeshNormalMaterial, Vector3 } from "three";
+import styled from "styled-components";
 
-const color = {
-  ball: "#007326",
-  fog: "#009c94",
-  bg: "#a8ffaa"
-}
+const InstancedSpheres = ({ radius = 1, segments = 24 }) => {
+  const ref = useRef();
+  const { viewport } = useThree();
+  const count = viewport.width < 30 ? 100 : 165;
 
-const sphere = {
-  radius: 1.5
-}
-
-export default function BallPit() {
   return (
-    <BallPitWrapper >
-      <Canvas shadows gl={{ stencil: false, antialias: false }} camera={{ position: [0, 0, 20], fov: 50, near: 17, far: 40 }}>     
-        <fog attach="fog" args={[color.fog, 25, 35]} />
-        <ambientLight intensity={1.5} />
-        <directionalLight position={[-10, -10, -5]} intensity={0.5} />
+    <InstancedRigidBodies
+      ref={ref}
+      colliders="ball"
+      positions={Array.from({ length: count }, () => [
+        2 - Math.random() * 4,
+        2 - Math.random() * 4,
+        2 - Math.random() * 4,
+      ])}
+    >
+      <instancedMesh
+        castShadow
+        receiveShadow
+        args={[null, null, count]}
+        position={[0, 0, -10]}
+      >
+        <sphereBufferGeometry args={[radius, segments, segments]} />
+        <meshLambertMaterial color="#007326" />
+      </instancedMesh>
+    </InstancedRigidBodies>
+  );
+};
+
+const Border = (props) => {
+  return (
+    <RigidBody colliders="cuboid" type="fixed">
+      <Box args={[100, 100, 10]} {...props} material={false} visible={true} />
+    </RigidBody>
+  );
+};
+
+const Borders = () => {
+  // This can cause a re-render whenever viewport changes size
+  const { viewport } = useThree();
+  return (
+    <>
+      {/* Top */}
+      <Border
+        position={[0, 9 + viewport.height / 2, 0]}
+        rotation={[-Math.PI / 2, 0, 0]}
+      />
+
+      {/* Bottom */}
+      <Border
+        position={[0, -9 - viewport.height / 2, 0]}
+        rotation={[-Math.PI / 2, 0, 0]}
+      />
+
+      {/* Left */}
+      <Border
+        position={[-15 - viewport.width / 2 - 1, 0, 0]}
+        rotation={[0, Math.PI / 2, 0]}
+      />
+
+      {/* Right */}
+      <Border
+        position={[15 + viewport.width / 2 + 1, 0, 0]}
+        rotation={[0, -Math.PI / 2, 0]}
+      />
+
+      {/* Back */}
+      <Border position={[0, 0, -3]} rotation={[0, 0, 0]} />
+
+      {/* Front */}
+      <Border position={[0, 0, 20]} rotation={[0, -Math.PI, 0]} />
+    </>
+  );
+};
+
+const Mouse = () => {
+  const ref = useRef();
+
+  // This can cause a re-render whenever viewport changes size
+  const { viewport } = useThree();
+
+  useFrame((state) =>
+    ref.current?.setTranslation(
+      new Vector3(
+        (state.mouse.x * viewport.width) / 1.5,
+        (state.mouse.y * viewport.height) / 1.5,
+        2
+      )
+    )
+  );
+
+  return (
+    <RigidBody ref={ref} colliders={false} type="kinematicPosition">
+      <BallCollider args={[3]} />
+    </RigidBody>
+  );
+};
+
+export const BallPit = () => {
+  return (
+    <BallPitWrapper>
+      <Canvas
+        shadows
+        gl={{ stencil: false, antialias: false }}
+        camera={{ position: [0, 0, 20], fov: 50, near: 15, far: 400 }}
+      >
+        <ambientLight intensity={1} />
         <directionalLight
           castShadow
           intensity={4}
           position={[50, 50, 25]}
-          shadow-mapSize={[256, 256]}
-          shadow-camera-left={-10}
-          shadow-camera-right={10}
+          shadow-mapSize={[512, 512]}
+          shadow-camera-left={-15}
+          shadow-camera-right={15}
           shadow-camera-top={10}
-          shadow-camera-bottom={-10}
+          shadow-camera-bottom={-20}
         />
-        <Physics gravity={[0, -50, 0]} defaultContactMaterial={{ restitution: 0.5 }}>
-          <group position={[0, 0, -10]}>
-            <Mouse />
-            <Borders />
-            <InstancedSpheres/>
-          </group>
-        </Physics>
-        <EffectComposer>
-          <SSAO radius={0.4} intensity={20} luminanceInfluence={0.1} color="red" />
-          <Bloom intensity={0.25} kernelSize={3} luminanceThreshold={0.} luminanceSmoothing={0.0} />
-        </EffectComposer>
-        
+
+        <Suspense>
+          <Physics gravity={[0, -50, 0]}>
+            <group position={[0, 0, -10]}>
+              <Mouse />
+              <Borders />
+
+              <InstancedSpheres radius={2} />
+            </group>
+          </Physics>
+        </Suspense>
       </Canvas>
     </BallPitWrapper>
-  )
-}
-
-function InstancedSpheres() {
-  const { viewport } = useThree()
-  const count = viewport.width < 15 ? 70 : 200; 
-  const [ref] = useSphere((index) => ({ mass: 100, position: [4 - Math.random() * 8, viewport.height, 0, 0], args: [sphere.radius]}))
-  return (
-    <instancedMesh ref={ref} castShadow receiveShadow args={[null, null, count]}>
-      <sphereBufferGeometry args={[sphere.radius, 32, 32]} />
-      <meshLambertMaterial color={color.ball}/>
-    </instancedMesh>
-  )
-}
-
-function Borders() {
-  const { viewport } = useThree()
-  return (
-    <>
-      <Plane position={[0, -viewport.height * 0.55, 0]} rotation={[-Math.PI / 2, 0, 0]} />
-      <Plane position={[-viewport.width / 2 - 1, 0, 0]} rotation={[0, Math.PI / 2, 0]} />
-      <Plane position={[viewport.width / 2 + 1, 0, 0]} rotation={[0, -Math.PI / 2, 0]} />
-      <Plane position={[0, 0, -1]} rotation={[0, 0, 0]} />
-      <Plane position={[0, 0, 12]} rotation={[0, -Math.PI, 0]} />
-    </>
-  )
-}
-
-function Plane({ color, ...props }) {
-  usePlane(() => ({ ...props } ))
-  return null
-}
-
-function Mouse() {
-  const { viewport } = useThree()
-  const [mouseSize, setMouseSize] = useState(viewport.width < 15 ? 2 : 4);
-  const [, api] = useSphere(() => ({ type: "Kinematic", args: [mouseSize] }))
-  return useFrame((state) => api.position.set((state.mouse.x * viewport.width) / 2, (state.mouse.y * viewport.height) / 2, 7))
-}
-
+  );
+};
 
 const BallPitWrapper = styled.div`
   position: fixed;
@@ -94,4 +150,6 @@ const BallPitWrapper = styled.div`
   height: 100%;
   margin: 0;
   padding: 0;
-`
+`;
+
+export default BallPit;
